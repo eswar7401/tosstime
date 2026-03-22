@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live Auctions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Use your existing CSS file -->
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #facc15;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      background: #111827;
+      border-radius: 10px;
+      padding: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #374151;
+    }
+
+    th {
+      background-color: #1f2937;
+      color: #facc15;
+      position: sticky;
+      top: 0;
+    }
+
+    tr:hover {
+      background-color: #1f2937;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Live Auctions</h1>
+
+  <div class="table-container">
+    <table id="pointsTable">
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Number of Players Picked </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="2">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const sheetURL = "https://docs.google.com/spreadsheets/d/1uEyRAr5SsxQ9gbPOKRe8N5PAt9HXfk-LRTCU_srNp3w/export?format=csv";
+
+async function loadData() {
+  try {
+    const response = await fetch(sheetURL);
+    const data = await response.text();
+
+    const rows = data.split("\n").slice(1);
+
+    let html = "";
+
+    rows.forEach(row => {
+      const cols = row.split(",");
+
+      // Avoid empty rows
+      if (cols.length > 1) {
+        html += `
+        <tr>
+          <td>${cols[0] || ""}</td>
+          <td>${cols[1] || ""}</td>
+        </tr>
+        `;
+      }
+    });
+
+    document.querySelector("#pointsTable tbody").innerHTML = html;
+
+  } catch (error) {
+    document.querySelector("#pointsTable tbody").innerHTML =
+      "<tr><td colspan='2'>Failed to load data</td></tr>";
+    console.error(error);
+  }
+}
+
+loadData();
+
+/* 🔄 Auto refresh every 3 seconds */
+setInterval(loadData, 3000);
+</script>
+
+</body>
+</html>
