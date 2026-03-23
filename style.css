@@ -88,14 +88,23 @@ header nav {
 }
 
 .logo-img {
-  height: 80px;
-  width: 80px;
+  height: 100px;
+  width: 100px;
   border-radius: 50%;
   border: 3px solid #6366f1;
-  animation: flipRotate 3s ease-in-out infinite;
+  animation: flipRotate 4s ease-in-out infinite;
   box-shadow: 0 0 40px rgba(99, 102, 241, 0.8), inset 0 0 30px rgba(99, 102, 241, 0.4);
   transition: all 0.3s ease;
   perspective: 1000px;
+}
+
+.teamlogo-img {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  border: 2px solid #6366f1;
+  animation:  4s ease-in-out infinite;
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.6), inset 0 0 20px rgba(99, 102, 241, 0.3);
 }
 
 .logo-img:hover {
